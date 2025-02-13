@@ -1,0 +1,103 @@
+/* Perus tyylit */
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  margin: 0;
+  background-color: #f4f4f4;
+}
+
+/* Lomakkeen ulkoasu */
+form {
+  margin-bottom: 20px;
+}
+
+/* Tiedoston valinta ja painikkeet */
+input[type="file"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Näyttää tuloksen */
+#result {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Modal-ikkuna */
+#modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  box-shadow: 0px 0px 10px black;
+  z-index: 100;
+  width: 300px;
+  border-radius: 8px;
+}
+
+/* Modalin sulkupainikkeen tyyli */
+#modal button {
+  background-color: #f44336;
+  margin-top: 10px;
+}
+
+#modal button:hover {
+  background-color: #e53935;
+}
+
+/* Yleinen ulkoasu kasvon tiedoille */
+#faceDetails {
+  margin-top: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  margin: 5px 0;
+}
+
+/* Lisää tyylejä responsiiviselle suunnittelulle (mobiililaitteet) */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input[type="file"],
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  #modal {
+    width: 90%;
+  }
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Naamantunnistus</title>
+  </head>
+  <body>
+    <form id="uploadForm">
+      <input type="file" id="imageInput" accept="image/*" />
+      <button type="submit">Analysoi kuva</button>
+    </form>
+    <p id="result"></p>
+
+    <!-- Modal dialogi kasvon tiedoille -->
+    <div
+      id="modal"
+      style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        box-shadow: 0px 0px 10px black;
+      "
+    >
+      <h3>Kasvon tiedot:</h3>
+      <ul id="faceInfoList"></ul>
+      <button onclick="document.getElementById('modal').style.display='none'">
+        Sulje
+      </button>
+    </div>
+
+    <script>
+      console.log("✅ JavaScript toimii! Sivun lataus onnistui.");
+      document
+        .getElementById("uploadForm")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          console.log("Lomake lähetetty!"); // 🔥 Onko tämä näkyvissä?
+
+          const file = document.getElementById("imageInput").files[0];
+          if (!file) {
+            console.log("Ei kuvaa valittuna!");
+            return alert("Valitse kuva!");
+          }
+
+          console.log("Kuva valittu:", file.name); // 🔥 Näkyykö tämä?
+
+          const formData = new FormData();
+          formData.append("image", file);
+
+          console.log("Lähetetään dataa palvelimelle..."); // 🔥
+
+          try {
+            const response = await fetch("http://localhost:3000/analyze", {
+              method: "POST",
+              body: formData,
+            });
+            if (!response.ok) {
+              console.error(
+                "Virhe palvelimen vastauksessa:",
+                response.statusText
+              );
+              return;
+            }
+            const result = await response.json();
+            console.log("Vastaus JSON-muodossa:", result);
+
+            const faceInfoList = document.getElementById("faceInfoList");
+            faceInfoList.innerHTML = ""; // Tyhjennetään lista
+            result.faces.forEach((face) => {
+              const listItem = document.createElement("li");
+              listItem.textContent = `Lasit: ${face.faceAttributes.glasses}`;
+              faceInfoList.appendChild(listItem);
+            });
+
+            document.getElementById("modal").style.display = "block"; // Näytetään modal
+          } catch (error) {
+            console.error("Virhe lähetyksessä:", error);
+          }
+        });
+    </script>
+  </body>
+</html>
